@@ -1,5 +1,7 @@
 # 스프링부트 시큐리티 + JWT
 
+## 인증
+
 ### UsernamePasswordAuthenticationFilter 등록
 
 - attemptAuthentication() 함수를 오버라이딩 하고 아래와 같이 구현한다.
@@ -33,8 +35,32 @@
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);
 
         return daoAuthenticationProvider;
     }
 ```
+
+## 인가
+
+- Tip : JWT를 사용하면 UserDetailsService를 호출하지 않기 때문에 @AuthenticationPrincipal 사용 불가능.왜냐하면 @AuthenticationPrincipal은 UserDetailsService에서 리턴될 때 만들어지기 때문이다.
+
+- Tip : 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
+
+- Tip : 스프링 시큐리티가 수행해주는 권한 처리를 위해 아래와 같이 토큰을 만들어서 Authentication 객체를 강제로 만들고 그걸 세션에 저장!
+
+```java
+    PrincipalDetails principalDetails = new PrincipalDetails(user);
+    Authentication authentication =
+            new UsernamePasswordAuthenticationToken(
+                    principalDetails, //나중에 컨트롤러에서 DI해서 쓸 때 사용하기 편함.
+                    null, // 패스워드는 모르니까 null 처리, 어차피 지금 인증하는게 아니니까!!
+                    principalDetails.getAuthorities());
+
+    // 강제로 시큐리티의 세션에 접근하여 값 저장
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+```
+
+![blog](https://postfiles.pstatic.net/MjAyMDA4MTBfMzQg/MDAxNTk3MDM2OTc1NjQ0.3bgXzd_Bf7JoS1fsYIyGP1DAl9kQZ8IA-_WW74GyaFcg.Vtp4R4c4X1zakxFzEk212VqkTsQhI0bRmPZft9ZQ92og.PNG.getinthere/Screenshot_31.png?type=w773)
+
+![blog](https://postfiles.pstatic.net/MjAyMDA4MTBfMjMy/MDAxNTk3MDM2OTc1NjM2.vXqNYRrbfievaF0YrELs8Rj-QW5gMmkoXRmIor3VDrEg.VR5lD5t-6T6FiFXd5bEopgLPR02oSuvzCjYNVFPlqaYg.PNG.getinthere/Screenshot_32.png?type=w773)

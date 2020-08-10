@@ -5,9 +5,11 @@ import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -80,12 +82,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		String jwtToken = JWT.create()
 				.withSubject(principalDetailis.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis()+864000000))
+				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
 				.withClaim("id", principalDetailis.getUser().getId())
 				.withClaim("username", principalDetailis.getUser().getUsername())
-				.sign(Algorithm.HMAC512("조익현"));
+				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
 		
-		response.addHeader("Authorization", "Bearer "+jwtToken);
+		response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
 	}
 	
 }
