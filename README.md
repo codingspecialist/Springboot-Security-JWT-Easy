@@ -1,5 +1,8 @@
 # 스프링부트 시큐리티 + JWT
 
+## 리엑트 연동 참고
+https://bezkoder.com/spring-boot-react-jwt-auth/
+
 ## 인증
 
 ### UsernamePasswordAuthenticationFilter 등록
