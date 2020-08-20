@@ -23,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private CorsConfig corsConfig;
+	
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -31,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+				.addFilter(corsConfig.corsFilter())
 				.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
