@@ -3,7 +3,7 @@ package com.cos.jwtex01;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class Test1 {
 
