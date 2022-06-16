@@ -1,5 +1,12 @@
 # 스프링부트 시큐리티 + JWT
 
+## version2 브랜치
+- websecurityconfigureradapter deprecated 문제
+- SecurityFilterChain 사용
+- AuthenticationManager DI문제 - 내부 클래스로 해결!!
+- 테스트한다고 h2 디비 사용
+- h2 디비 User 테이블 안만들어져서 -> Users로 변경
+
 ## 리엑트 연동 참고
 https://bezkoder.com/spring-boot-react-jwt-auth/
 
