@@ -6,19 +6,19 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.cos.jwtex01.model.User;
+import com.cos.jwtex01.model.Users;
 
-public class PrincipalDetails implements UserDetails{
+public class PrincipalDetails implements UserDetails {
 
-	private User user;
+    private Users user;
 
-    public PrincipalDetails(User user){
+    public PrincipalDetails(Users user) {
         this.user = user;
     }
 
-    public User getUser() {
-		return user;
-	}
+    public Users getUser() {
+        return user;
+    }
 
     @Override
     public String getPassword() {
@@ -49,12 +49,14 @@ public class PrincipalDetails implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
-	@Override
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         user.getRoleList().forEach(r -> {
-        	authorities.add(()->{ return r;});
+            authorities.add(() -> {
+                return r;
+            });
         });
         return authorities;
     }
