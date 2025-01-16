@@ -1,5 +1,16 @@
 # 스프링부트 시큐리티 + JWT
 
+# 브랜치에 버전이 있습니다. 최신 버전인 version3 을 활용하세요
+
+# 업데이트된 다른 버전도 있습니다. 학생 분들이 커뮤니티에 올려준 링크
++++ OAuth2.0 실습 소스 +++
+
+https://github.com/hhmkorea/studySpringBoot/tree/main/security1
+
++++ JWT 실습 소스 +++
+
+https://github.com/hhmkorea/studySpringBoot/tree/main/jwt
+
 ## 리엑트 연동 참고
 https://bezkoder.com/spring-boot-react-jwt-auth/
 
